@@ -1,9 +1,9 @@
 {
-    "Identifier": "",
-    "Slug": "",
-    "Status": "",
-    "Title": "",
-    "Description": "",
+    "Identifier": "eos3wzy",
+    "Slug": "qupkake-micro-pKa",
+    "Status": "In progress",
+    "Title": "Predict micro-pKa of organic molecules",
+    "Description": "QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds, This has significant applications in drug discovery, materials science, and environmental chemistry.",
     "Mode": "",
     "Task": [],
     "Input": [],
@@ -12,8 +12,8 @@
     "Output Type": [],
     "Output Shape": "",
     "Interpretation": "",
-    "Tag": [],
-    "Publication": "",
-    "Source Code": "",
-    "License": ""
+    "Tag": "pKa",
+    "Publication": "https://doi.org/10.1021/acs.jctc.4c00328",
+    "Source Code": "https://github.com/hutchisonlab/QupKake",
+    "License": "CC-BY-4.0"
 }
