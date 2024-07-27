@@ -3,6 +3,11 @@ import pandas as pd
 from rdkit import Chem
 import numpy as np
 
+import sys
+
+root = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(root)
+
 #Function to extract the pKa values from the sdf file and wirte them in a csv file
 def extract_pka_statistics_from_sdf(sdf_file, csv_file, no_protonation):
     summary_data = []
@@ -81,7 +86,7 @@ import argparse
 import logging
 import sys
 
-from ._version import get_versions
+from _version import get_versions
 
 __version__ = get_versions()["version"]
 
