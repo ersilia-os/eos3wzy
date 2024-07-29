@@ -2,7 +2,7 @@
 import os
 import csv
 import sys
-from cli import main_smiles
+from cli import main_file
 
 # parse arguments
 input_file = sys.argv[1]
@@ -43,12 +43,25 @@ tmp_input_file = os.path.join(root, "tmp_input.csv")
 convert_input_file(input_file, tmp_input_file)
 
 
-# Create a list of arguments as if they were passed from the command line
-qupkake_args = ["file", tmp_input_file, "-o", "qupkake_output.sdf"]
 
+# Create a class to mimic the argument structure expected by main_file
+class Args:
+    def __init__(self, filename, smiles_col, name_col, root, output, multiprocessing=False, tautomerize=False):
+        self.filename = filename
+        self.smiles_col = smiles_col
+        self.name_col = name_col
+        self.root = root
+        self.output = output
+        self.multiprocessing = multiprocessing
+        self.tautomerize = tautomerize
+
+
+
+# Set up arguments for batch processing
+args = Args(filename=tmp_input_file, smiles_col="smile", name_col="molecule", root=root, output=output_file, tautomerize=False)
 
 # RUN QUPKAKE
-main_smiles(qupkake_args)
+main_file(args)
 
 # CLEAN UP TEMPORARY FILE
 os.remove(tmp_input_file)
