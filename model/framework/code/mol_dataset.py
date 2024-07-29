@@ -15,8 +15,13 @@ from rdkit.Chem import AllChem, PandasTools
 from torch_geometric.data import Data, Dataset
 from tqdm import tqdm
 
-from .featurizer import Featurizer
-from .mol_utils import Tautomerize
+import sys
+
+root = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(root)
+
+from featurizer import Featurizer
+from mol_utils import Tautomerize
 
 RDLogger.DisableLog("rdApp.*")
 
