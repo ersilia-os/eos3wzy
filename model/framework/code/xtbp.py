@@ -9,7 +9,7 @@ from typing import Any, Union
 
 from rdkit import Chem
 
-from . import XTB_LOCATION
+XTB_LOCATION = os.environ.get("XTBPATH") or "xtb"
 
 print(XTB_LOCATION)
 
