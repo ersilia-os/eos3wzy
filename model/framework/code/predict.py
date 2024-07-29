@@ -11,10 +11,15 @@ from rdkit.Chem import PandasTools
 from torch_geometric.loader import DataLoader
 from torch_geometric.transforms import Compose, NormalizeFeatures
 
-from .mol_dataset import MolDataset, MolPairDataset
-from .pka_models import PredictpKa
-from .sites_models import SitesPrediction
-from .transforms import IncludeEnergy, ToTensor
+import sys
+
+root = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(root)
+
+from mol_dataset import MolDataset, MolPairDataset
+from pka_models import PredictpKa
+from sites_models import SitesPrediction
+from transforms import IncludeEnergy, ToTensor
 
 warnings.filterwarnings(
     "ignore", ".*Consider increasing the value of the `num_workers` argument*"
