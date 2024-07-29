@@ -2,10 +2,7 @@ import os
 import pandas as pd
 from rdkit import Chem
 import numpy as np
-import sys
 
-root = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(root)
 
 import sys
 
