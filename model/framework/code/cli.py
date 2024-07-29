@@ -2,6 +2,10 @@ import os
 import pandas as pd
 from rdkit import Chem
 import numpy as np
+import sys
+
+root = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(root)
 
 import sys
 
@@ -373,7 +377,7 @@ def run_pipeline(args):
     args : argparse.Namespace
         Command line arguments.
     """
-    from .predict import run_prediction_pipeline
+    from predict import run_prediction_pipeline
 
     args.output = check_output_file(args.output, args.root)
     args.mp = args.multiprocessing
