@@ -11,7 +11,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit.Chem.MolStandardize import rdMolStandardize
 
-from .xtbp import XTBP, RunXTB
+XTB_LOCATION = os.environ.get("XTBPATH") or "xtb"
 
 
 class Tautomerize:
