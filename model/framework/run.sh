@@ -1,1 +1,6 @@
-python $1/code/main.py $2 $3
+cwd=$(pwd)
+cd $1
+qupkake file $2 -s smiles -o intermediate_output.sdf
+python code/postprocess.py data/outputs/intermediate_output.sdf $3
+rm -rf data
+cd $cwd
