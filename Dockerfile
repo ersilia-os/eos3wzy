@@ -4,6 +4,11 @@ MAINTAINER ersilia
 
 WORKDIR /app
 
+RUN pip install pandas
+RUN pip instal rdkit
+RUN pip install pytorch-lightning
+RUN pip install torch-geometric
+
 #  qupKake repository clone
 RUN git clone https://github.com/Shualdon/QupKake.git
 
