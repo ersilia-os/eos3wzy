@@ -32,7 +32,6 @@ def extract_pka_statistics_from_sdf(sdf_file, csv_file):
         if mol is None:
             continue
         
-        mol_name = mol.GetProp('_Name') if mol.HasProp('_Name') else 'Unknown'
 
         if mol.HasProp('pka'):
             pka_list = mol.GetProp('pka').split(',')
@@ -44,7 +43,6 @@ def extract_pka_statistics_from_sdf(sdf_file, csv_file):
             num_pkas = len(pkas)
 
             summary_data.append({
-                'Molecule': mol_name,
                 'min_pka': min_pka,
                 'avg_pka': avg_pka,
                 'max_pka': max_pka,
@@ -58,6 +56,7 @@ def extract_pka_statistics_from_sdf(sdf_file, csv_file):
 
 
 if __name__ == "__main__":
+
     if len(sys.argv) != 3:
         print("Usage: python postprocess.py <input_sdf_file> <output_csv_file>")
         sys.exit(1)
