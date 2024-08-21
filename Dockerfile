@@ -1,8 +1,6 @@
 FROM bentoml/model-server:0.11.0-py39
 MAINTAINER ersilia
 
-WORKDIR /app
-
 RUN pip install pandas
 RUN pip install rdkit
 RUN pip install pytorch-lightning
