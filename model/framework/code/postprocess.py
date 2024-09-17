@@ -3,7 +3,7 @@ import sys
 import pandas as pd
 from rdkit import Chem
 
-def extract_pka_statistics_from_sdf(sdf_file, csv_file):
+def extract_pka_statistics_from_sdf(sdf_file):
     """
     Extracts pKa statistics from an SDF file and writes them to a CSV file.
 
@@ -14,7 +14,7 @@ def extract_pka_statistics_from_sdf(sdf_file, csv_file):
     csv_file : str
         Path to the output CSV file where the statistics will be stored.
     """
-    summary_data = []
+    summary_data = {}
 
     # Check if the SDF file exists
     if not os.path.exists(sdf_file):
@@ -29,30 +29,19 @@ def extract_pka_statistics_from_sdf(sdf_file, csv_file):
 
     # Process each molecule in the SDF file
     for mol in supplier:
+        name = mol.GetProp("_Name")
+        if name not in summary_data:
+            summary_data[name] = []
+        print(name)
         if mol is None:
             continue
-        
+        pka = mol.GetProp('pka')
+        pka = float(pka)
+        idx = mol.GetProp("idx")
+        pka_type = mol.GetProp("pka_type")
+        summary_data[name].append(pka)
 
-        if mol.HasProp('pka'):
-            pka_list = mol.GetProp('pka').split(',')
-            pkas = [float(pka.strip('tensor()')) for pka in pka_list]
-
-            min_pka = min(pkas)
-            avg_pka = sum(pkas) / len(pkas)
-            max_pka = max(pkas)
-            num_pkas = len(pkas)
-
-            summary_data.append({
-                'min_pka': min_pka,
-                'avg_pka': avg_pka,
-                'max_pka': max_pka,
-                'num_pkas': num_pkas
-            })
-
-    # Convert the summary data to a pandas DataFrame and save it as a CSV file
-    df = pd.DataFrame(summary_data)
-    df.to_csv(csv_file, index=False)
-    print(f"pKa statistics saved to {csv_file}")
+    return summary_data
 
 
 if __name__ == "__main__":
