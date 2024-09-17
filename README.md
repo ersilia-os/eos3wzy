@@ -25,6 +25,7 @@ QupKake is an innovative approach that combines graph neural network (GNN) model
 
 ## Ersilia model URLs
 * [GitHub](https://github.com/ersilia-os/eos3wzy)
+* [AWS S3](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip)
 
 ## Citation
 
