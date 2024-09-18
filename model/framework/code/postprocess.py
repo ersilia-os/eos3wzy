@@ -19,7 +19,7 @@ def extract_pka_statistics_from_sdf(sdf_file):
     # Check if the SDF file exists
     if not os.path.exists(sdf_file):
         print(f"Error: SDF file '{sdf_file}' not found.")
-        sys.exit(1)
+        return None
 
     # Read the SDF file using RDKit
     supplier = Chem.SDMolSupplier(sdf_file)
@@ -36,7 +36,11 @@ def extract_pka_statistics_from_sdf(sdf_file):
         if mol is None:
             continue
         pka = mol.GetProp('pka')
-        pka = float(pka)
+        pka = str(pka)
+        try:
+            pka = float(pka)
+        except:
+            pka = float(pka.split("tensor(")[1].split(")")[0])
         idx = mol.GetProp("idx")
         pka_type = mol.GetProp("pka_type")
         summary_data[name].append(pka)
