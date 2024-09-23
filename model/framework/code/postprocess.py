@@ -36,25 +36,9 @@ def extract_pka_statistics_from_sdf(sdf_file):
         if mol is None:
             continue
         pka = mol.GetProp('pka')
-        pka = str(pka)
-        try:
-            pka = float(pka)
-        except:
-            pka = float(pka.split("tensor(")[1].split(")")[0])
+        pka = float(pka)
         idx = mol.GetProp("idx")
         pka_type = mol.GetProp("pka_type")
         summary_data[name].append(pka)
 
     return summary_data
-
-
-if __name__ == "__main__":
-
-    if len(sys.argv) != 3:
-        print("Usage: python postprocess.py <input_sdf_file> <output_csv_file>")
-        sys.exit(1)
-
-    sdf_file = sys.argv[1]
-    csv_file = sys.argv[2]
-
-    extract_pka_statistics_from_sdf(sdf_file, csv_file)

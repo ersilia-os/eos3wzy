@@ -48,13 +48,11 @@ subprocess.run(command)
 
 output = extract_pka_statistics_from_sdf(os.path.join(temp_folder, "output/intermediate_output.sdf"))
 
-
+print(output)
 R = []
 
-for n in names:
-    if output is None:
-        r = [None]*10
-    else:
+if output is not None:
+    for n in names:
         if n in output:
             r = sorted(output[n])
             if len(r) > 10:
@@ -62,8 +60,11 @@ for n in names:
             if len(r) < 10:
                 r = r + [None]*(10-len(r))
         else:
-            r = [None]*10
-    R += [r]
+                r = [None]*10
+        R += [r]
+    else:
+        r = [None]*10
+        R += [r]
 
 header = ["pka_{0}".format(i) for i in range(10)]
 
