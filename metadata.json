@@ -36,5 +36,8 @@
     "Source Code": "https://github.com/hutchisonlab/QupKake",
     "License": "BSD-3-Clause",
     "Contributor": "LauraGomezjurado",
-    "Incorporation Date": "2024-07-17"
+    "Incorporation Date": "2024-07-17",
+    "S3": "https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip",
+    "Model Size": 222.0,
+    "Environment Size": 4796.0
 }
