@@ -1,30 +1,39 @@
 {
     "Identifier": "eos3wzy",
     "Slug": "qupkake",
-    "Status": "Ready",
+    "Status": "In progress",
     "Title": "Predict micro-pKa of organic molecules",
-    "Description": "QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds, This has significant applications in drug discovery, materials science, and environmental chemistry.",
-    "Mode": "Pretrained",
-    "Task": [
-        "Regression"
+    "Description": "QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds. This has significant applications in drug discovery, materials science, and environmental chemistry.",
+    "Deployment": [
+        "Local"
     ],
+    "Source": "Local",
+    "Source Type": "External",
+    "Task": "Annotation",
+    "Subtask": "Property calculation or prediction",
     "Input": [
         "Compound"
     ],
-    "Input Shape": "Single",
+    "Input Dimension": 1,
     "Output": [
-        "Other value"
+        "Score"
     ],
-    "Output Type": [
-        "Float"
-    ],
-    "Output Shape": "List",
-    "Interpretation": "Up to 10 pKa values for the molecule",
+    "Output Dimension": 22,
+    "Output Consistency": "Fixed",
+    "Interpretation": "An array of 22 dimensions is given, counting the number of atoms with an acidic or basic pKa value rounded at 0, 1, 2, 3... up to 10.",
     "Tag": [
         "pKa"
     ],
+    "Biomedical Area": [
+        "Any"
+    ],
+    "Target Organism": [
+        "Not Applicable"
+    ],
+    "Publication Type": "Peer reviewed",
+    "Publication Year": 2024,
     "Publication": "https://doi.org/10.1021/acs.jctc.4c00328",
     "Source Code": "https://github.com/hutchisonlab/QupKake",
     "License": "BSD-3-Clause",
-    "S3": "https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip"
+    "Contributor": "LauraGomezjurado"
 }

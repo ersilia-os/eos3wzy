@@ -6,6 +6,9 @@ RUN pip install pandas==2.2.2
 RUN pip install rdkit==2024.3.5
 RUN pip install pytorch-lightning==2.4.0
 RUN pip install torch-geometric==2.6.0
+RUN pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+
+
 
 WORKDIR /repo
 COPY . /repo

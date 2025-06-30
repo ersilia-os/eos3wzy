@@ -1,0 +1,23 @@
+name,type,direction,description
+pka_acidic_0,integer,high,Atoms with predicted acidic pKa close to 0
+pka_acidic_1,integer,high,Atoms with predicted acidic pKa close to 1
+pka_acidic_2,integer,high,Atoms with predicted acidic pKa close to 2
+pka_acidic_3,integer,high,Atoms with predicted acidic pKa close to 3
+pka_acidic_4,integer,high,Atoms with predicted acidic pKa close to 4
+pka_acidic_5,integer,high,Atoms with predicted acidic pKa close to 5
+pka_acidic_6,integer,high,Atoms with predicted acidic pKa close to 6
+pka_acidic_7,integer,high,Atoms with predicted acidic pKa close to 7
+pka_acidic_8,integer,high,Atoms with predicted acidic pKa close to 8
+pka_acidic_9,integer,high,Atoms with predicted acidic pKa close to 9
+pka_acidic_10,integer,high,Atoms with predicted acidic pKa close to 10
+pka_basic_0,integer,high,Atoms with predicted basic pKa close to 0
+pka_basic_1,integer,high,Atoms with predicted basic pKa close to 1
+pka_basic_2,integer,high,Atoms with predicted basic pKa close to 2
+pka_basic_3,integer,high,Atoms with predicted basic pKa close to 3
+pka_basic_4,integer,high,Atoms with predicted basic pKa close to 4
+pka_basic_5,integer,high,Atoms with predicted basic pKa close to 5
+pka_basic_6,integer,high,Atoms with predicted basic pKa close to 6
+pka_basic_7,integer,high,Atoms with predicted basic pKa close to 7
+pka_basic_8,integer,high,Atoms with predicted basic pKa close to 8
+pka_basic_9,integer,high,Atoms with predicted basic pKa close to 9
+pka_basic_10,integer,high,Atoms with predicted basic pKa close to 10

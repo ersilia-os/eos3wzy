@@ -6,18 +6,18 @@ import tempfile
 import subprocess
 import shutil
 import pandas as pd
+from rdkit import Chem
 
 root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(root)
 
-from qupkake_code.cli import main
-from postprocess import extract_pka_statistics_from_sdf
+from postprocess import extract_pka_from_sdf
 
 # parse arguments
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-temp_folder = tempfile.mkdtemp(prefix='ersilia_')
+temp_folder = tempfile.mkdtemp(prefix='ersilia-')
 
 # read SMILES from .csv file, assuming one column with header
 with open(input_file, "r") as f:
@@ -25,8 +25,23 @@ with open(input_file, "r") as f:
     next(reader)
     smiles_list = [r[0] for r in reader]
 
+N = len(smiles_list)
+
+keep_idxs = []
+smiles_list_ = []
+for i, smiles in enumerate(smiles_list):
+    try:
+        mol = Chem.MolFromSmiles(smiles)
+    except:
+        mol = None
+    if mol is None:
+        continue
+    keep_idxs += [i]
+    smiles_list_ += [smiles]
+smiles_list = smiles_list_[:]
+
 #the name is needed to process multiple molecules
-df = pd.read_csv(input_file)
+df = pd.DataFrame(smiles_list, columns=["smiles"])
 names = ['mol' + str(i) for i in range(len(df))]
 df['name'] = names
 input_with_name = os.path.join(temp_folder, "input.csv")
@@ -37,7 +52,7 @@ args = [
     "file",
     input_with_name,
     "--root", temp_folder,
-    "-s", "input",
+    "-s", "smiles",
     "-n", "name",
     "-o", "intermediate_output.sdf"
 ]
@@ -46,32 +61,35 @@ python_exec = sys.executable
 command = [python_exec, cli_script] + args
 subprocess.run(command)
 
-output = extract_pka_statistics_from_sdf(os.path.join(temp_folder, "output/intermediate_output.sdf"))
+output = extract_pka_from_sdf(names, os.path.join(temp_folder, "output/intermediate_output.sdf"))
 
-print(output)
-R = []
+header = []
+for pka_type in ["acidic", "basic"]:
+    for i in range(11):
+        header += ["pka_{0}_{1}".format(pka_type, i)]
 
-if output is not None:
-    for n in names:
-        if n in output:
-            r = sorted(output[n])
-            if len(r) > 10:
-                r = r[:5] + r[5:]
-            if len(r) < 10:
-                r = r + [None]*(10-len(r))
-        else:
-                r = [None]*10
-        R += [r]
+header2idx = {h: i for i, h in enumerate(header)}
+
+R = [[None]*len(header)]*N
+
+for i, out in enumerate(output):
+    idx = keep_idxs[i]
+    if out is None:
+        R[idx] = [None] * len(header)
     else:
-        r = [None]*10
-        R += [r]
-
-header = ["pka_{0}".format(i) for i in range(10)]
+        r = [0] * len(header)
+        for k, v in out.items():
+            pka_type, vint = k
+            header_key = "pka_{0}_{1}".format(pka_type, vint)
+            idx_ = header2idx[header_key]
+            r[idx_] = v
+        R[idx] = r
 
 shutil.rmtree(temp_folder)
+
 # write output in a .csv file
 with open(output_file, "w") as f:
     writer = csv.writer(f)
-    writer.writerow(header)  # header
+    writer.writerow(header)
     for r in R:
         writer.writerow(r)
