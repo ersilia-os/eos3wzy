@@ -1,44 +1,86 @@
 # Predict micro-pKa of organic molecules
 
-QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds, This has significant applications in drug discovery, materials science, and environmental chemistry.
+QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds. This has significant applications in drug discovery, materials science, and environmental chemistry.
 
-## Identifiers
+This model was incorporated on 2024-07-17.
 
-* EOS model ID: `eos3wzy`
-* Slug: `qupkake`
+## Information
+### Identifiers
+- **Ersilia Identifier:** `eos3wzy`
+- **Slug:** `qupkake`
 
-## Characteristics
+### Domain
+- **Task:** `Annotation`
+- **Subtask:** `Property calculation or prediction`
+- **Biomedical Area:** `Any`
+- **Target Organism:** `Not Applicable`
+- **Tags:** `pKa`
 
-* Input: `Compound`
-* Input Shape: `Single`
-* Task: `Regression`
-* Output: `Other value`
-* Output Type: `Float`
-* Output Shape: `List`
-* Interpretation: Up to 10 pKa values for the molecule
+### Input
+- **Input:** `Compound`
+- **Input Dimension:** `1`
 
-## References
+### Output
+- **Output Dimension:** `22`
+- **Output Consistency:** `Fixed`
+- **Interpretation:** An array of 22 dimensions is given, counting the number of atoms with an acidic or basic pKa value rounded at 0, 1, 2, 3... up to 10.
 
-* [Publication](https://doi.org/10.1021/acs.jctc.4c00328)
-* [Source Code](https://github.com/hutchisonlab/QupKake)
-* Ersilia contributor: [LauraGomezjurado](https://github.com/LauraGomezjurado)
+Below are the **Output Columns** of the model:
+| Name | Type | Direction | Description |
+|------|------|-----------|-------------|
+| pka_acidic_0 | integer | high | Atoms with predicted acidic pKa close to 0 |
+| pka_acidic_1 | integer | high | Atoms with predicted acidic pKa close to 1 |
+| pka_acidic_2 | integer | high | Atoms with predicted acidic pKa close to 2 |
+| pka_acidic_3 | integer | high | Atoms with predicted acidic pKa close to 3 |
+| pka_acidic_4 | integer | high | Atoms with predicted acidic pKa close to 4 |
+| pka_acidic_5 | integer | high | Atoms with predicted acidic pKa close to 5 |
+| pka_acidic_6 | integer | high | Atoms with predicted acidic pKa close to 6 |
+| pka_acidic_7 | integer | high | Atoms with predicted acidic pKa close to 7 |
+| pka_acidic_8 | integer | high | Atoms with predicted acidic pKa close to 8 |
+| pka_acidic_9 | integer | high | Atoms with predicted acidic pKa close to 9 |
 
-## Ersilia model URLs
-* [GitHub](https://github.com/ersilia-os/eos3wzy)
-* [AWS S3](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip)
+_10 of 22 columns are shown_
+### Source and Deployment
+- **Source:** `Local`
+- **Source Type:** `External`
+- **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip)
 
-## Citation
+### Resource Consumption
 
-If you use this model, please cite the [original authors](https://doi.org/10.1021/acs.jctc.4c00328) of the model and the [Ersilia Model Hub](https://github.com/ersilia-os/ersilia/blob/master/CITATION.cff).
 
-## License
+### References
+- **Source Code**: [https://github.com/hutchisonlab/QupKake](https://github.com/hutchisonlab/QupKake)
+- **Publication**: [https://doi.org/10.1021/acs.jctc.4c00328](https://doi.org/10.1021/acs.jctc.4c00328)
+- **Publication Type:** `Peer reviewed`
+- **Publication Year:** `2024`
+- **Ersilia Contributor:** [LauraGomezjurado](https://github.com/LauraGomezjurado)
 
-This package is licensed under a GPL-3.0 license. The model contained within this package is licensed under a BSD-3-Clause license.
+### License
+This package is licensed under a [GPL-3.0](https://github.com/ersilia-os/ersilia/blob/master/LICENSE) license. The model contained within this package is licensed under a [BSD-3-Clause](LICENSE) license.
 
-Notice: Ersilia grants access to these models 'as is' provided by the original authors, please refer to the original code repository and/or publication if you use the model in your research.
+**Notice**: Ersilia grants access to models _as is_, directly from the original authors, please refer to the original code repository and/or publication if you use the model in your research.
 
-## About Us
 
-The [Ersilia Open Source Initiative](https://ersilia.io) is a Non Profit Organization ([1192266](https://register-of-charities.charitycommission.gov.uk/charity-search/-/charity-details/5170657/full-print)) with the mission is to equip labs, universities and clinics in LMIC with AI/ML tools for infectious disease research.
+## Use
+To use this model locally, you need to have the [Ersilia CLI](https://github.com/ersilia-os/ersilia) installed.
+The model can be **fetched** using the following command:
+```bash
+# fetch model from the Ersilia Model Hub
+ersilia fetch eos3wzy
+```
+Then, you can **serve**, **run** and **close** the model as follows:
+```bash
+# serve the model
+ersilia serve eos3wzy
+# generate an example file
+ersilia example -n 3 -f my_input.csv
+# run the model
+ersilia run -i my_input.csv -o my_output.csv
+# close the model
+ersilia close
+```
 
-[Help us](https://www.ersilia.io/donate) achieve our mission!
+## About Ersilia
+The [Ersilia Open Source Initiative](https://ersilia.io) is a tech non-profit organization fueling sustainable research in the Global South.
+Please [cite](https://github.com/ersilia-os/ersilia/blob/master/CITATION.cff) the Ersilia Model Hub if you've found this model to be useful. Always [let us know](https://github.com/ersilia-os/ersilia/issues) if you experience any issues while trying to run it.
+If you want to contribute to our mission, consider [donating](https://www.ersilia.io/donate) to Ersilia!
