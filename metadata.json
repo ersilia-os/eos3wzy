@@ -1,7 +1,7 @@
 {
     "Identifier": "eos3wzy",
     "Slug": "qupkake",
-    "Status": "In progress",
+    "Status": "Ready",
     "Title": "Predict micro-pKa of organic molecules",
     "Description": "QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds. This has significant applications in drug discovery, materials science, and environmental chemistry.",
     "Deployment": [
@@ -38,6 +38,14 @@
     "Contributor": "LauraGomezjurado",
     "Incorporation Date": "2024-07-17",
     "S3": "https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip",
+    "DockerHub": "https://hub.docker.com/r/ersiliaos/eos3wzy",
+    "Docker Architecture": "AMD64",
     "Model Size": 222.0,
-    "Environment Size": 4820.0
+    "Environment Size": 4820.0,
+    "Image Size": 5036.47,
+    "Computational Performance 1": 35.56,
+    "Computational Performance 2": -1.0,
+    "Computational Performance 3": -1.0,
+    "Computational Performance 4": -1.0,
+    "Computational Performance 5": -1.0
 }
