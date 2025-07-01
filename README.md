@@ -43,12 +43,19 @@ _10 of 22 columns are shown_
 ### Source and Deployment
 - **Source:** `Local`
 - **Source Type:** `External`
+- **DockerHub**: [https://hub.docker.com/r/ersiliaos/eos3wzy](https://hub.docker.com/r/ersiliaos/eos3wzy)
+- **Docker Architecture:** `AMD64`
 - **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos3wzy.zip)
 
 ### Resource Consumption
 - **Model Size (Mb):** `222`
 - **Environment Size (Mb):** `4820`
+- **Image Size (Mb):** `5036.47`
 
+**Computational Performance (seconds):**
+- 10 inputs: `35.56`
+- 100 inputs: `-1`
+- 10000 inputs: `-1`
 
 ### References
 - **Source Code**: [https://github.com/hutchisonlab/QupKake](https://github.com/hutchisonlab/QupKake)
