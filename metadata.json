@@ -16,7 +16,7 @@
     ],
     "Input Dimension": 1,
     "Output": [
-        "Score"
+        "Value"
     ],
     "Output Dimension": 22,
     "Output Consistency": "Fixed",
