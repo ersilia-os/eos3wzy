@@ -4,6 +4,7 @@ QupKake is an innovative approach that combines graph neural network (GNN) model
 
 This model was incorporated on 2024-07-17.
 
+
 ## Information
 ### Identifiers
 - **Ersilia Identifier:** `eos3wzy`
@@ -13,7 +14,7 @@ This model was incorporated on 2024-07-17.
 - **Task:** `Annotation`
 - **Subtask:** `Property calculation or prediction`
 - **Biomedical Area:** `Any`
-- **Target Organism:** `Not Applicable`
+- **Target Organism:** `Any`
 - **Tags:** `pKa`
 
 ### Input
