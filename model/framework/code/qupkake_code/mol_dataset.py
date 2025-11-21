@@ -205,6 +205,7 @@ class MolDatasetAbstract(Dataset, ABC):
     def process(self):
         """Process the dataset to the processed data folder."""
         self.data = self._get_data(embed=True)
+
         if self.mp:
             L = list(range(self.num_processes))[::-1]
             chunks = np.array_split(self.data, self.num_processes)
@@ -214,7 +215,9 @@ class MolDatasetAbstract(Dataset, ABC):
                 )
         else:
             self.data = self._process_chunk(self.data, 0)
+           
         self._save_file()
+
 
     def _handle_processing_error(self, row, error):
         """Handle errors during processing"""
@@ -579,7 +582,6 @@ class MolDataset(MolDatasetAbstract):
         """If these files are found in raw_dir, processing is skipped"""
         self.data = self._get_data(False)
         self._check_columns()
-        # print(len(self.data))
         # return f'{self.data_name}_{self.set}.pt'
         if self.data_name:
             return [
@@ -614,7 +616,7 @@ class MolDataset(MolDatasetAbstract):
             mol = Chem.AddHs(mol, addCoords=True)
 
         AllChem.MMFFOptimizeMolecule(mol)
-        # mol = Chem.RemoveHs(mol)
+       # mol = Chem.RemoveHs(mol)
         return mol
 
     def _get_graph(self, row):
@@ -651,6 +653,7 @@ class MolDataset(MolDatasetAbstract):
             mol = tautomers.lowest_tautomer
             name = tautomers.lowest_tautomer_name
 
+
         mol_data = Featurizer(
             mol=mol,
             name=name,
@@ -658,6 +661,8 @@ class MolDataset(MolDatasetAbstract):
             num_processes=self.num_processes,
             **{**other_info, **self.kwargs},
         )
+        
+
         return mol_data.data
 
     def _process_chunk(self, chunk, chunk_pos) -> pd.DataFrame:
@@ -682,8 +687,11 @@ class MolDataset(MolDatasetAbstract):
                     self._load_processed_data(file_name)
             except Exception as e:
                 bad_idx.append(index)
-                self._handle_processing_error(row, e)
-                pass
+                print("❌ ERROR processing:", row[self.name_col])
+                print("Exception:", e)
+                import traceback
+                traceback.print_exc()
+                raise   # <-- FORCE the error to show up
 
         chunk = chunk.drop(bad_idx).reset_index(drop=True)
         return chunk

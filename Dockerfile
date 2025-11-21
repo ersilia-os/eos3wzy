@@ -1,7 +1,7 @@
 FROM bentoml/model-server:0.11.0-py310
 MAINTAINER ersilia
 
-
+RUN pip install numpy==2.1.2
 RUN conda install pandas=2.2.2 -c conda-forge 
 RUN pip install rdkit==2024.3.5
 RUN pip install pytorch-lightning==2.4.0

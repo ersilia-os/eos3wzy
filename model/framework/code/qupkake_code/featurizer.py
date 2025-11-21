@@ -524,9 +524,24 @@ class Featurizer:
 
     def construct_edge_index(self) -> torch.Tensor:
         """Construct edge index array E."""
-        (rows, cols) = np.nonzero(GetAdjacencyMatrix(self.mol))
-        torch_rows = torch.from_numpy(rows.astype(np.int64)).to(torch.long)
-        torch_cols = torch.from_numpy(cols.astype(np.int64)).to(torch.long)
+        # Convert RDKit adjacency matrix to a REAL numpy array
+        adj = np.asarray(GetAdjacencyMatrix(self.mol), dtype=float)
+
+        # Clean invalid values (in case RDKit gave NaN or weird entries)
+        adj = np.nan_to_num(adj, nan=0.0)
+
+        # Find edges
+        rows, cols = np.nonzero(adj)
+ 
+        # Ensure rows/cols are real numpy arrays, not matrices
+        rows = np.ascontiguousarray(rows, dtype=np.int64)
+        cols = np.ascontiguousarray(cols, dtype=np.int64)
+
+
+        # Convert to torch
+        torch_rows = torch.from_numpy(rows)
+        torch_cols = torch.from_numpy(cols)
+
         return torch.stack([torch_rows, torch_cols], dim=0)
 
     def construct_edge_features(

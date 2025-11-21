@@ -57,6 +57,7 @@ def load_mol_dataset(
         mol_col=mol_col,
         mp=mp,
     )
+    print("MolDataset",dataset.len())
     return dataset
 
 
@@ -141,6 +142,7 @@ def predict_sites(dataset: MolDataset, model: SitesPrediction) -> list:
     Returns:
         list: list of indices of protonation\deprotonation sites
     """
+    print(dataset.len())
     trainer = pl.Trainer(
         logger=False,
         enable_progress_bar=False,
