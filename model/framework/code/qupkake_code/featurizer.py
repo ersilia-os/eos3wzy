@@ -382,6 +382,7 @@ class Featurizer:
         idx_to_list: bool = False,
         convert_strings: bool = False,
         num_processes: int = 1,
+        xtb_timeout: int = 60,
         **kwargs,
     ):
         self.smiles = smiles
@@ -399,6 +400,7 @@ class Featurizer:
         self.idx_to_list = idx_to_list
         self.convert_strings = convert_strings
         self.num_processes = num_processes
+        self.xtb_timeout = xtb_timeout
         self.kwargs = kwargs
         self.exclude_atom = False
 
@@ -496,14 +498,15 @@ class Featurizer:
         if self.xtb:
             try:
                 xtb_out = RunXTB(
-                    self.mol, f"--opt --alpb water --lmo -P {self.num_processes}"
+                    self.mol, f"--opt --alpb water --lmo -P {self.num_processes}",
+                    timeout=self.xtb_timeout,
                 )
                 xtbp = XTBP(xtb_out())
                 mol_attributes = xtbp()
 
                 # self.mol = xtb_out.get_opt_mol()
 
-                fukui_out = RunXTB(self.mol, "--vfukui")
+                fukui_out = RunXTB(self.mol, "--vfukui", timeout=self.xtb_timeout)
                 fukui = XTBP(fukui_out())
                 mol_attributes["atomprop"]["fukui"] = fukui["atomprop"]["fukui"]
             except Exception as e:

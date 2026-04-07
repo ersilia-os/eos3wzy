@@ -1,6 +1,7 @@
 import logging
 import multiprocessing
 import os
+import signal
 import traceback
 from abc import ABC, abstractmethod
 from copy import deepcopy
@@ -21,6 +22,28 @@ from mol_utils import Tautomerize
 RDLogger.DisableLog("rdApp.*")
 
 logger = logging.getLogger(__name__)
+
+MOLECULE_TIMEOUT = 300
+
+
+class _MolTimeout:
+    """Context manager: raises TimeoutError if the block exceeds `seconds`."""
+
+    def __init__(self, seconds):
+        self.seconds = seconds
+        self._old_handler = None
+
+    def _handler(self, signum, frame):
+        raise TimeoutError(f"Molecule processing exceeded {self.seconds}s")
+
+    def __enter__(self):
+        self._old_handler = signal.signal(signal.SIGALRM, self._handler)
+        signal.alarm(self.seconds)
+        return self
+
+    def __exit__(self, *args):
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, self._old_handler)
 
 
 class MolPairData(Data):
@@ -356,15 +379,16 @@ class MolPairDataset(MolDatasetAbstract):
                 f"{row[self.name_col]}_{row[self.idx_col]}_{row[self.type_col]}_pair.pt"
             )
             try:
-                if not os.path.exists(
-                    os.path.join(
-                        self.processed_dir,
-                        file_name,
-                    )
-                ):
-                    self._process_row_with_retry(row)
-                else:
-                    self._load_processed_data(file_name)
+                with _MolTimeout(MOLECULE_TIMEOUT):
+                    if not os.path.exists(
+                        os.path.join(
+                            self.processed_dir,
+                            file_name,
+                        )
+                    ):
+                        self._process_row_with_retry(row)
+                    else:
+                        self._load_processed_data(file_name)
             except Exception as e:
                 bad_idx.append(index)
                 self._handle_processing_error(row, e)
@@ -377,7 +401,7 @@ class MolPairDataset(MolDatasetAbstract):
         file_name = (
             f"{row[self.name_col]}_{row[self.idx_col]}_{row[self.type_col]}_pair.pt"
         )
-        tries = 5
+        tries = 2
         while tries > 0:
             try:
                 data = self._make_molpair(row)
@@ -676,22 +700,19 @@ class MolDataset(MolDatasetAbstract):
             else:
                 file_name = f"{row[self.name_col]}.pt"
             try:
-                if not os.path.exists(
-                    os.path.join(
-                        self.processed_dir,
-                        file_name,
-                    )
-                ):
-                    self._process_row_with_retry(row)
-                else:
-                    self._load_processed_data(file_name)
+                with _MolTimeout(MOLECULE_TIMEOUT):
+                    if not os.path.exists(
+                        os.path.join(
+                            self.processed_dir,
+                            file_name,
+                        )
+                    ):
+                        self._process_row_with_retry(row)
+                    else:
+                        self._load_processed_data(file_name)
             except Exception as e:
                 bad_idx.append(index)
-                print("❌ ERROR processing:", row[self.name_col])
-                print("Exception:", e)
-                import traceback
-                traceback.print_exc()
-                raise   # <-- FORCE the error to show up
+                self._handle_processing_error(row, e)
 
         chunk = chunk.drop(bad_idx).reset_index(drop=True)
         return chunk
@@ -702,7 +723,7 @@ class MolDataset(MolDatasetAbstract):
             file_name = f"{row[self.name_col]}_{self.data_name}.pt"
         else:
             file_name = f"{row[self.name_col]}.pt"
-        tries = 5
+        tries = 2
         while tries > 0:
             try:
                 data = self._get_graph(row)

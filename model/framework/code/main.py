@@ -47,6 +47,8 @@ df['name'] = names
 input_with_name = os.path.join(temp_folder, "input.csv")
 df.to_csv(input_with_name, index=False)
 
+n_cores = max(1, (os.cpu_count() or 2) - 1)
+
 cli_script = os.path.join(root,"qupkake_code", "cli.py")
 args = [
     "file",
@@ -54,7 +56,8 @@ args = [
     "--root", temp_folder,
     "-s", "smiles",
     "-n", "name",
-    "-o", "intermediate_output.sdf"
+    "-o", "intermediate_output.sdf",
+    "-mp", str(n_cores),
 ]
 
 python_exec = sys.executable
@@ -70,12 +73,12 @@ for pka_type in ["acidic", "basic"]:
 
 header2idx = {h: i for i, h in enumerate(header)}
 
-R = [[None]*len(header)]*N
+R = [['']*len(header) for _ in range(N)]
 
 for i, out in enumerate(output):
     idx = keep_idxs[i]
-    if out is None:
-        R[idx] = [None] * len(header)
+    if not out:
+        R[idx] = [''] * len(header)
     else:
         r = [0] * len(header)
         for k, v in out.items():

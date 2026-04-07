@@ -4,7 +4,7 @@ import re
 import shutil
 import tempfile
 from itertools import groupby
-from subprocess import PIPE, CalledProcessError, run
+from subprocess import PIPE, CalledProcessError, TimeoutExpired, run
 from typing import Any, Union
 
 from rdkit import Chem
@@ -56,9 +56,10 @@ class RunXTB:
             Options to pass to xTB.
     """
 
-    def __init__(self, mol: Union[Chem.Mol, str] = None, options: str = "") -> None:
+    def __init__(self, mol: Union[Chem.Mol, str] = None, options: str = "", timeout: int = 60) -> None:
         self.mol = mol
         self.options = options
+        self.timeout = timeout
         self.opt_done = False
         #self._check_xtb_exists()
         self._check_input()
@@ -184,6 +185,7 @@ class RunXTB:
                     stderr=PIPE,
                     encoding="utf-8",
                     check=True,
+                    timeout=self.timeout,
                 )
                 if process.stderr == "abnormal termination of xtb":
                     raise RuntimeError("Problem running xtb on molecule")
@@ -194,6 +196,11 @@ class RunXTB:
                         #     os.path.join(tmpdirname, "xtbtopo.mol")
                         # )
 
+            except TimeoutExpired as exc:
+                os.chdir(working_dir)
+                raise RuntimeError(
+                    f"xtb timed out after {self.timeout}s on molecule"
+                ) from exc
             except CalledProcessError as exc:
                 os.chdir(working_dir)
                 raise RuntimeError("Problem running xtb on molecule") from exc

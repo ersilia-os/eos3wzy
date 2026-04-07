@@ -50,6 +50,7 @@ class Tautomerize:
         keep_mol: bool = True,
         check_exists: bool = True,
         num_processes: int = 1,
+        xtb_timeout: int = 60,
         **kwargs,
     ):
         if smiles and mol:
@@ -64,6 +65,7 @@ class Tautomerize:
         self.kwargs = kwargs
         self.run = run
         self.check_exists = check_exists
+        self.xtb_timeout = xtb_timeout
         self.num_processes = num_processes
         self.tautomers = self.set_tautomers()
 
@@ -170,7 +172,8 @@ class Tautomerize:
                 taut_file = f"{tmpdirname}/{self.name}_t{i}.mol"
                 Chem.MolToMolFile(taut, taut_file)
                 xtb_out = RunXTB(
-                    taut_file, f"--opt --alpb water --lmo -P {self.num_processes}"
+                    taut_file, f"--opt --alpb water --lmo -P {self.num_processes}",
+                    timeout=self.xtb_timeout,
                 )
                 xtbp = XTBP(xtb_out())
                 mol_attributes = xtbp()
