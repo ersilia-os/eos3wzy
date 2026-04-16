@@ -17,7 +17,7 @@ from postprocess import extract_pka_from_sdf
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-temp_folder = tempfile.mkdtemp(prefix='ersilia-')
+temp_folder = tempfile.mkdtemp(prefix='pkatmp-')
 
 # read SMILES from .csv file, assuming one column with header
 with open(input_file, "r") as f:
