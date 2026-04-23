@@ -57,8 +57,10 @@ args = [
     "-s", "smiles",
     "-n", "name",
     "-o", "intermediate_output.sdf",
-    "-mp", str(n_cores),
 ]
+
+if len(smiles_list) > 100 and n_cores > 1:
+    args += ["-mp", str(n_cores)]
 
 python_exec = sys.executable
 command = [python_exec, cli_script] + args
