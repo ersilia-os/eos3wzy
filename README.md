@@ -2,7 +2,7 @@
 
 QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds. This has significant applications in drug discovery, materials science, and environmental chemistry.
 
-This model was incorporated on 2024-07-17.Last packaged on 2025-11-21.
+This model was incorporated on 2024-07-17.Last packaged on 2026-04-24.
 
 ## Information
 ### Identifiers
@@ -50,11 +50,11 @@ _10 of 22 columns are shown_
 ### Resource Consumption
 - **Model Size (Mb):** `222`
 - **Environment Size (Mb):** `4696`
-- **Image Size (Mb):** `6562.62`
+- **Image Size (Mb):** `5039.51`
 
 **Computational Performance (seconds):**
-- 10 inputs: `37.13`
-- 100 inputs: `-1`
+- 10 inputs: `48.79`
+- 100 inputs: `1066.19`
 - 10000 inputs: `-1`
 
 ### References
