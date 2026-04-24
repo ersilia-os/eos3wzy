@@ -47,8 +47,12 @@ def embed_molecule(mol):
             return mol
 
     mol = Chem.AddHs(mol)
-    AllChem.EmbedMolecule(mol)
-    AllChem.MMFFOptimizeMolecule(mol)
+    result = AllChem.EmbedMolecule(mol, maxAttempts=1000)
+    if result >= 0:
+        try:
+            AllChem.MMFFOptimizeMolecule(mol)
+        except Exception:
+            pass
 
     return mol
 

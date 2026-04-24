@@ -26,7 +26,7 @@ def extract_pka_from_sdf(molecule_names, sdf_file):
     supplier = Chem.SDMolSupplier(sdf_file)
     if not supplier:
         print(f"Error: Failed to read SDF file '{sdf_file}'.")
-        sys.exit(1)
+        return None
 
     # Process each molecule in the SDF file
     names = []

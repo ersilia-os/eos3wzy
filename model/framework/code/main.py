@@ -67,6 +67,8 @@ command = [python_exec, cli_script] + args
 subprocess.run(command)
 
 output = extract_pka_from_sdf(names, os.path.join(temp_folder, "output/intermediate_output.sdf"))
+if output is None:
+    output = [{} for _ in names]
 
 header = []
 for pka_type in ["acidic", "basic"]:
