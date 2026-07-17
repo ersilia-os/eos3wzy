@@ -31,12 +31,12 @@ def extract_pka_from_sdf(molecule_names, sdf_file):
     # Process each molecule in the SDF file
     names = []
     for mol in supplier:
+        if mol is None:
+            continue
         name = mol.GetProp("_Name")
         if name not in summary_data:
             summary_data[name] = []
         names += [name]
-        if mol is None:
-            continue
         pka = mol.GetProp('pka')
         pka = float(pka)
         idx = int(mol.GetProp('idx'))
