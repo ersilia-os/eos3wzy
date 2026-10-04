@@ -1,6 +1,6 @@
 # Predict micro-pKa of organic molecules
 
-QupKake is an innovative approach that combines graph neural network (GNN) models with semiempirical quantum mechanical (QM) features to forecast the micro-pKa values of organic molecules. QM has a significant role in both identifying reaction sites and predicting micro-pKa values. Precisely predicting micro-pKa values is vital for comprehending and adjusting the acidity and basicity of organic compounds. This has significant applications in drug discovery, materials science, and environmental chemistry.
+Counts, across 22 bins, how many atoms in a molecule carry an acidic or basic micro-pKa near each integer from 0 to 10, giving a profile of ionisable sites rather than a single value. QupKake, from Abarbanel and Hutchison, first identifies candidate reaction sites with a graph neural network, then predicts each site's pKa using features derived from semi-empirical quantum chemistry, combining learned and physics-based signal. Coverage is best for the drug-like organic chemistry the model was fitted on.
 
 This model was incorporated on 2024-07-17.Last packaged on 2026-07-30.
 
@@ -23,7 +23,7 @@ This model was incorporated on 2024-07-17.Last packaged on 2026-07-30.
 ### Output
 - **Output Dimension:** `22`
 - **Output Consistency:** `Fixed`
-- **Interpretation:** An array of 22 dimensions is given, counting the number of atoms with an acidic or basic pKa value rounded at 0, 1, 2, 3... up to 10.
+- **Interpretation:** Counts of atoms with acidic or basic micro-pKa values falling in each integer bin from 0 to 10.
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
