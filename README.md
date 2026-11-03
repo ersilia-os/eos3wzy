@@ -1,6 +1,6 @@
 # Predict micro-pKa of organic molecules
 
-Counts, across 22 bins, how many atoms in a molecule carry an acidic or basic micro-pKa near each integer from 0 to 10, giving a profile of ionisable sites rather than a single value. QupKake, from Abarbanel and Hutchison, first picks candidate reaction sites with a graph neural network, then predicts each site's pKa from GFN2-xTB semi-empirical quantum chemistry features, with transfer learning onto 5,637 compounds carrying measured micro-pKa values. Root-mean-square errors of 0.5 to 0.8 pKa units were reported on five external test sets.
+Counts, across 22 bins, how many atoms in a molecule carry an acidic or basic micro-pKa near each integer from 0 to 10, giving a profile of ionisable sites rather than a single value. QupKake, from Abarbanel and Hutchison, first picks candidate reaction sites with a graph neural network, then predicts each sites pKa from GFN2-xTB semi-empirical quantum chemistry features, with transfer learning onto 5,637 compounds carrying measured micro-pKa values. Root-mean-square errors of 0.5 to 0.8 pKa units were reported on five external test sets.
 
 This model was incorporated on 2024-07-17.
 Last packaged on 2026-07-30.
@@ -50,7 +50,7 @@ _10 of 22 columns are shown_
 
 ### Resource Consumption
 - **Model Size (Mb):** `222`
-- **Environment Size (Mb):** `4765`
+- **Environment Size (Mb):** `5448`
 - **Image Size (Mb):** `5127.99`
 
 **Computational Performance (seconds):**
