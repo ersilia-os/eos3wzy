@@ -1,7 +1,6 @@
 import logging
 import os
 import warnings
-from importlib import resources as impresources
 from typing import Tuple, Union
 
 import pandas as pd
@@ -114,9 +113,9 @@ def load_models() -> Tuple[SitesPrediction, SitesPrediction, PredictpKa]:
     Returns:
         Tuple[SitesPrediction, SitesPrediction, PredictpKa]: protonation model, deprotonation model, pKa model
     """
-    import models
-
-    models_path = impresources.files(models)
+    models_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "..", "..", "checkpoints")
+    )
     prot_model = SitesPrediction.load_from_checkpoint(
         os.path.join(models_path, "protonation_model.ckpt"),
         map_location=torch.device("cpu"),
